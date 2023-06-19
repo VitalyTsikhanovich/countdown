@@ -1,5 +1,5 @@
 import React, { useState, useEffect, ChangeEventHandler } from 'react';
-import  { SliderCountdown } from './slider';
+import { SliderCountdown } from './slider';
 import { Progress } from './progress';
 import { InitialTime } from './initialTime';
 import { Result } from './result';
@@ -49,6 +49,9 @@ export const Countdown: React.FC = React.memo(() => {
         if (value > 750) {
             value = 750;
         }
+        if (value < 0) {
+            value = 0;
+        }
         setInputValueMinutes(value);
         setMinutes(value);
         setSliderValue(value);
@@ -59,11 +62,14 @@ export const Countdown: React.FC = React.memo(() => {
         if (value > 59) {
             value = 59;
         }
+        if (value < 0) {
+            value = 0;
+        }
         setInputValueSecond(value);
         setSecond(value);
         setSliderValue(value);
     };
-	 
+
     const handleSliderChange = (
         event: React.ChangeEvent<HTMLInputElement>,
         value: number,
