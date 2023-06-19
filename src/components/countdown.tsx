@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { Slider } from './slider';
+import React, { useState, useEffect, ChangeEventHandler } from 'react';
+import  { SliderCountdown } from './slider';
 import { Progress } from './progress';
 import { InitialTime } from './initialTime';
 import { Result } from './result';
-import { Button, Paper } from '@mui/material';
+import { Button, Paper, Slider } from '@mui/material';
+
 export const Countdown: React.FC = React.memo(() => {
     const [second, setSecond] = useState(parseInt(''));
     const [minutes, setMinutes] = useState(parseInt(''));
     const [start, setStart] = useState(false);
     const [inputValueSecond, setInputValueSecond] = useState(parseInt(''));
     const [inputValueMinutes, setInputValueMinutes] = useState(parseInt(''));
+    const [sliderValue, setSliderValue] = useState(0);
     //  const audio = new Audio('./finish_hi.mp3')
-
-  
 
     useEffect(() => {
         let intervalId: string | number | NodeJS.Timer | undefined;
@@ -30,7 +30,6 @@ export const Countdown: React.FC = React.memo(() => {
         if (minutes === 0 && second === 0) {
             clearInterval(intervalId);
             clears();
-           
         }
         return () => {
             clearInterval(intervalId);
@@ -46,15 +45,37 @@ export const Countdown: React.FC = React.memo(() => {
     }, []);
 
     const handleInputMinutesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const value = +event.currentTarget.value;
+        let value = +event.currentTarget.value;
+        if (value > 750) {
+            value = 750;
+        }
         setInputValueMinutes(value);
         setMinutes(value);
+        setSliderValue(value);
     };
 
     const handleInputSecondChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const value = +event.currentTarget.value;
+        let value = +event.currentTarget.value;
+        if (value > 59) {
+            value = 59;
+        }
         setInputValueSecond(value);
         setSecond(value);
+        setSliderValue(value);
+    };
+	 
+    const handleSliderChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+        value: number,
+        minutes: number,
+        second: number
+    ) => {
+        minutes = Math.floor(value / 60);
+        second = value % 60;
+        setInputValueMinutes(minutes);
+        setInputValueSecond(second);
+        setMinutes(minutes);
+        setSecond(second);
     };
 
     const handleStart = React.useCallback(() => {
@@ -70,13 +91,12 @@ export const Countdown: React.FC = React.memo(() => {
         clears();
     }, []);
     return (
-        <div >
-			<Result title='Countdown' minutes={!minutes ? '0' : minutes} second={!second ? '0' : second}/>
-			
-            
+        <div>
+            <Result title='Countdown' minutes={!minutes ? '0' : minutes} second={!second ? '0' : second} />
+
             <div>
                 <InitialTime
-					 label='minutes'
+                    label='minutes'
                     value={inputValueMinutes}
                     start={false}
                     max={750}
@@ -85,7 +105,7 @@ export const Countdown: React.FC = React.memo(() => {
                     disabled={start ? true : false}
                 />
                 <InitialTime
-					 label='seconds'
+                    label='seconds'
                     max={59}
                     min={0}
                     value={inputValueSecond}
@@ -93,13 +113,26 @@ export const Countdown: React.FC = React.memo(() => {
                     handleChange={handleInputSecondChange}
                     disabled={start ? true : false}
                 />
-               
             </div>
-            <button onClick={handleStart}>{start ? 'Пауза' : 'Старт'}</button>
+            <Button variant='outlined' onClick={handleStart}>
+                {start ? 'Пауза' : 'Старт'}
+            </Button>
 
-            <Progress value={!inputValueMinutes ? 0 : inputValueMinutes} max={750} />
+            <SliderCountdown
+                value={inputValueMinutes * 60 + inputValueSecond}
+                onChange={handleSliderChange}
+                max={750 * 60 + 59}
+                min={0}
+                disabled={start}
+                step={15}
+            />
 
-            {start && <button onClick={handleStop}>Стоп</button>}
+            {/* <Progress value={!inputValueMinutes ? 0 : inputValueMinutes} max={750} /> */}
+            {start && (
+                <Button variant='outlined' onClick={handleStop}>
+                    Стоп
+                </Button>
+            )}
         </div>
     );
 });

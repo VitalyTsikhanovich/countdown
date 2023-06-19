@@ -8,7 +8,7 @@ function App() {
     return (
         <>
             <Timer/>
-            <Countdown  />
+            <Countdown   />
         </>
 
     )
