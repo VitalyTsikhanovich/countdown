@@ -102,7 +102,7 @@ export const Countdown: React.FC = React.memo(() => {
 
             <div>
                 <InitialTime
-                    label='minutes'
+                    label='Minutes'
                     value={inputValueMinutes}
                     start={false}
                     max={750}
@@ -111,7 +111,7 @@ export const Countdown: React.FC = React.memo(() => {
                     disabled={start ? true : false}
                 />
                 <InitialTime
-                    label='seconds'
+                    label='Seconds'
                     max={59}
                     min={0}
                     value={inputValueSecond}
