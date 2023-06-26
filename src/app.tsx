@@ -1,17 +1,14 @@
-
-import {Countdown} from './components/countdown';
-import {Timer} from './components/timer';
-
+import { Countdown } from './components/Countdown/countdown';
+import { Timer } from './components/Timer/timer';
 
 function App() {
     // @ts-ignore
     return (
         <>
-            <Timer/>
-            <Countdown   />
+            <Timer />
+            <Countdown />
         </>
-
-    )
+    );
 }
 
 export default App;

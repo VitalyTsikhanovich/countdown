@@ -1,6 +1,5 @@
 
 import React, { useState, useEffect } from 'react';
-// import { Sliders } from './slider';
 import TextField from '@mui/material/TextField';
 export type TimeType = {
     value: number;

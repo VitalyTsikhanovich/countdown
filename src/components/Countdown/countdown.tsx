@@ -1,21 +1,26 @@
-import React, { useState, useEffect, ChangeEventHandler } from 'react';
-import { SliderCountdown } from './slider';
-import { Progress } from './progress';
-import { InitialTime } from './initialTime';
-import { Result } from './result';
-import { Button, Paper, Slider } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { SliderCountdown } from './components/slider';
+import { Progress } from './components/progress';
+import { InitialTime } from './components/initialTime';
+import { Result } from './components/result';
+import { Button } from '@mui/material';
 
 export const Countdown: React.FC = React.memo(() => {
-    const [second, setSecond] = useState(parseInt(''));
-    const [minutes, setMinutes] = useState(parseInt(''));
+    const [second, setSecond] = useState(0);
+    const [minutes, setMinutes] = useState(0);
     const [start, setStart] = useState(false);
-    const [inputValueSecond, setInputValueSecond] = useState(parseInt(''));
-    const [inputValueMinutes, setInputValueMinutes] = useState(parseInt(''));
-    const [sliderValue, setSliderValue] = useState(0);
-    //  const audio = new Audio('./finish_hi.mp3')
+    const [inputValueSecond, setInputValueSecond] = useState(0);
+    const [inputValueMinutes, setInputValueMinutes] = useState(0);
+    const [initialTime, setInitialTime] = useState(0);
+
+    //  const audio = new Audio('./finish_hi.mp3');  // ???
+
+    //  const playFinishSound = () => {
+    // 	audio.play();
+    //  };
 
     useEffect(() => {
-        let intervalId: string | number | NodeJS.Timer | undefined;
+        let intervalId: NodeJS.Timeout | undefined;
 
         if (start) {
             intervalId = setInterval(() => {
@@ -27,24 +32,26 @@ export const Countdown: React.FC = React.memo(() => {
                 }
             }, 1000);
         }
+
         if (minutes === 0 && second === 0) {
             clearInterval(intervalId);
+            // playFinishSound()
             clears();
         }
+
         return () => {
             clearInterval(intervalId);
         };
     }, [start, second, minutes]);
 
-	 const handleSliderChange = (value: number) => {
-		const minutes = Math.floor(value / 60);
-		const second = value % 60;
-		setInputValueMinutes(minutes);
-		setInputValueSecond(second);
-		setMinutes(minutes);
-		setSecond(second);
-	 };
- 
+    const handleSliderChange = (value: number) => {
+        const minutes = Math.floor(value / 60);
+        const seconds = value % 60;
+        setInputValueMinutes(minutes);
+        setInputValueSecond(seconds);
+        setMinutes(minutes);
+        setSecond(seconds);
+    };
 
     const handleInputMinutesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         let value = +event.currentTarget.value;
@@ -56,7 +63,6 @@ export const Countdown: React.FC = React.memo(() => {
         }
         setInputValueMinutes(value);
         setMinutes(value);
-      //   setSliderValue(value);
     };
 
     const handleInputSecondChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,33 +75,35 @@ export const Countdown: React.FC = React.memo(() => {
         }
         setInputValueSecond(value);
         setSecond(value);
-      //   setSliderValue(value);
     };
-	 const clears = React.useCallback(() => {
-		setMinutes(parseInt(''));
-		setSecond(parseInt(''));
-		setStart(false);
-		setInputValueMinutes(parseInt(''));
-		setInputValueSecond(parseInt(''));
-		setSliderValue(0 )
-		
-  }, []);
 
-    const handleStart = React.useCallback(() => {
-        setStart(function (start) {
-            return !start;
-        });
+    const clears = () => {
+        setMinutes(0);
+        setSecond(0);
+        setStart(false);
+        setInputValueMinutes(0);
+        setInputValueSecond(0);
+        setInitialTime(0);
+    };
 
-        setInputValueMinutes(parseInt(''));
-        setInputValueSecond(parseInt(''));
-    }, []);
+    const handleStart = () => {
+        setStart(start => !start);
+        setInputValueMinutes(0);
+        setInputValueSecond(0);
+        setInitialTime(inputValueMinutes * 60 + inputValueSecond);
+    };
 
-    const handleStop = React.useCallback(() => {
+    const handleStop = () => {
         clears();
-    }, []);
+    };
+    const progressPercentage = initialTime > 0 ? ((initialTime - (minutes * 60 + second)) / initialTime) * 100 : 0;
     return (
         <div>
-            <Result title='Countdown' minutes={!minutes ? '0' : minutes} second={!second ? '0' : second} />
+            <Result
+                title='Countdown'
+                minutes={!minutes ? '0' : minutes.toString()}
+                second={!second ? '0' : second.toString()}
+            />
 
             <div>
                 <InitialTime
@@ -105,7 +113,7 @@ export const Countdown: React.FC = React.memo(() => {
                     max={750}
                     handleChange={handleInputMinutesChange}
                     min={0}
-                    disabled={start ? true : false}
+                    disabled={start}
                 />
                 <InitialTime
                     label='Seconds'
@@ -114,7 +122,7 @@ export const Countdown: React.FC = React.memo(() => {
                     value={inputValueSecond}
                     start={false}
                     handleChange={handleInputSecondChange}
-                    disabled={start ? true : false}
+                    disabled={start}
                 />
             </div>
             <Button variant='outlined' onClick={handleStart}>
@@ -129,8 +137,8 @@ export const Countdown: React.FC = React.memo(() => {
                 disabled={start}
                 step={15}
             />
+            <Progress value={progressPercentage} />
 
-            {/* <Progress value={!inputValueMinutes ? 0 : inputValueMinutes} max={750} /> */}
             {start && (
                 <Button variant='outlined' onClick={handleStop}>
                     Стоп
