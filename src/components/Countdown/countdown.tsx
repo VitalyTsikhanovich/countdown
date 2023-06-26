@@ -3,7 +3,8 @@ import { SliderCountdown } from './components/slider';
 import { Progress } from './components/progress';
 import { InitialTime } from './components/initialTime';
 import { Result } from './components/result';
-import { Button } from '@mui/material';
+import { Button, Card } from '@mui/material';
+import { ButtonContainer, Container, Initial } from '../styles/stylesCoundown/Countdown.style';
 
 export const Countdown: React.FC = React.memo(() => {
     const [second, setSecond] = useState(0);
@@ -98,14 +99,19 @@ export const Countdown: React.FC = React.memo(() => {
     };
     const progressPercentage = initialTime > 0 ? ((initialTime - (minutes * 60 + second)) / initialTime) * 100 : 0;
     return (
-        <div>
+        <Container>
+			  <Card
+                variant='outlined'
+                style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center' }}
+            >
+					
             <Result
                 title='Countdown'
                 minutes={!minutes ? '0' : minutes.toString()}
                 second={!second ? '0' : second.toString()}
             />
 
-            <div>
+            <Initial>
                 <InitialTime
                     label='Minutes'
                     value={inputValueMinutes}
@@ -124,11 +130,20 @@ export const Countdown: React.FC = React.memo(() => {
                     handleChange={handleInputSecondChange}
                     disabled={start}
                 />
-            </div>
-            <Button variant='outlined' onClick={handleStart}>
+            </Initial>
+
+				<ButtonContainer>
+				<Button variant='outlined' onClick={handleStart}>
                 {start ? 'Пауза' : 'Старт'}
             </Button>
 
+            {start && (
+                <Button variant='outlined' onClick={handleStop}>
+                    Стоп
+                </Button>
+            )}
+				</ButtonContainer>
+           
             <SliderCountdown
                 value={inputValueMinutes * 60 + inputValueSecond}
                 onChange={handleSliderChange}
@@ -138,12 +153,7 @@ export const Countdown: React.FC = React.memo(() => {
                 step={15}
             />
             <Progress value={progressPercentage} />
-
-            {start && (
-                <Button variant='outlined' onClick={handleStop}>
-                    Стоп
-                </Button>
-            )}
-        </div>
+				</Card>
+        </Container>
     );
 });

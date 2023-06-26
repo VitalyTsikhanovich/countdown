@@ -9,7 +9,7 @@ export const Progress: React.FC<ProgressPropsType > = ({ value }) => {
     return (
         <>
             <CircularProgress variant='determinate' value={value} />
-            {Math.floor(value)}%
+            {/* {Math.floor(value)}% */}
         </>
     );
 };
