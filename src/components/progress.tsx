@@ -6,7 +6,7 @@ export type ProgressType = {
 };
 
 export const Progress = ({ value, max }: ProgressType) => {
-    const percent = (value / max) * 100;
+    const percent = Math.floor((value / max) * 100)
 
     const progressStyle = {
         width: `${percent}%`,

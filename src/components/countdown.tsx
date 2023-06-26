@@ -36,13 +36,15 @@ export const Countdown: React.FC = React.memo(() => {
         };
     }, [start, second, minutes]);
 
-    const clears = React.useCallback(() => {
-        setMinutes(parseInt(''));
-        setSecond(parseInt(''));
-        setStart(false);
-        setInputValueMinutes(parseInt(''));
-        setInputValueSecond(parseInt(''));
-    }, []);
+	 const handleSliderChange = (value: number) => {
+		const minutes = Math.floor(value / 60);
+		const second = value % 60;
+		setInputValueMinutes(minutes);
+		setInputValueSecond(second);
+		setMinutes(minutes);
+		setSecond(second);
+	 };
+ 
 
     const handleInputMinutesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         let value = +event.currentTarget.value;
@@ -54,7 +56,7 @@ export const Countdown: React.FC = React.memo(() => {
         }
         setInputValueMinutes(value);
         setMinutes(value);
-        setSliderValue(value);
+      //   setSliderValue(value);
     };
 
     const handleInputSecondChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,22 +69,17 @@ export const Countdown: React.FC = React.memo(() => {
         }
         setInputValueSecond(value);
         setSecond(value);
-        setSliderValue(value);
+      //   setSliderValue(value);
     };
-
-    const handleSliderChange = (
-        event: React.ChangeEvent<HTMLInputElement>,
-        value: number,
-        minutes: number,
-        second: number
-    ) => {
-        minutes = Math.floor(value / 60);
-        second = value % 60;
-        setInputValueMinutes(minutes);
-        setInputValueSecond(second);
-        setMinutes(minutes);
-        setSecond(second);
-    };
+	 const clears = React.useCallback(() => {
+		setMinutes(parseInt(''));
+		setSecond(parseInt(''));
+		setStart(false);
+		setInputValueMinutes(parseInt(''));
+		setInputValueSecond(parseInt(''));
+		setSliderValue(0 )
+		
+  }, []);
 
     const handleStart = React.useCallback(() => {
         setStart(function (start) {

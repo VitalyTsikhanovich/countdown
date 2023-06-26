@@ -49,9 +49,11 @@ export const Timer: React.FC = React.memo(() => {
               
 				<Title>Timer</Title>
                 <Timers>
-                    <Paper elevation={3}  style={{display: 'flex',  justifyContent: 'center'}} >
-						 
-						  {minutes}:{seconds}:{millisecond}
+                    <Paper elevation={8}  style={{display: 'flex',  justifyContent: 'center'}} >
+						 <Dir>
+						 {minutes}:{seconds}:{millisecond}
+
+						 </Dir>
 						 
                     </Paper>
 					
@@ -111,3 +113,8 @@ const Title = styled.h1`
 // justify-content: center
 // `
 
+const Dir = styled.div`
+width: 100%
+height: 100px
+color: red
+`
