@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/countdown/static/js/main.b7ef1162.js",
+    "main.js": "/countdown/static/js/main.7cd47b5b.js",
     "index.html": "/countdown/index.html",
-    "main.b7ef1162.js.map": "/countdown/static/js/main.b7ef1162.js.map"
+    "main.7cd47b5b.js.map": "/countdown/static/js/main.7cd47b5b.js.map"
   },
   "entrypoints": [
-    "static/js/main.b7ef1162.js"
+    "static/js/main.7cd47b5b.js"
   ]
 }
