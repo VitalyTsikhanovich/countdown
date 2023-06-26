@@ -7,7 +7,7 @@ type ResultType = {
 export const Result = ({ title, minutes, second }: ResultType) => {
     return (
         <>
-            <h1> {title}</h1>
+            <h1>{title}</h1>
             <p>{minutes}</p>
             <p>{second}</p>
         </>
