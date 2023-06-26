@@ -47,7 +47,7 @@ export const Timer: React.FC = React.memo(() => {
                 <Box style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                     <Timers>
                         <Paper elevation={8} style={{ display: 'flex', justifyContent: 'center', width: '190px' }}>
-                            {minutes}:{seconds}:{millisecond}
+                            {minutes}:{seconds}:{!millisecond ? '000' : millisecond}
                         </Paper>
                     </Timers>
                 </Box>
