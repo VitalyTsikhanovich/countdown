@@ -5,7 +5,7 @@ type ProgressPropsType = {
     value: number;
 };
 
-export const Progress: React.FC<ProgressPropsType > = ({ value }) => {
+export const Progress = ({ value }: ProgressPropsType) => {
     return (
         <>
 		  
