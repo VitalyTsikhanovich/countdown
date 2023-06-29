@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { Box, Button, Card, Paper } from '@mui/material';
 import { ButtonContainer, Container, Timers, Title } from '../styles/stylesTimer/Timer.style';
 export const Timer: React.FC = React.memo(() => {
@@ -37,6 +36,7 @@ export const Timer: React.FC = React.memo(() => {
         setSeconds(0);
         setMillisecond(0);
     }, []);
+	
     return (
         <Container>
             <Card
@@ -61,19 +61,8 @@ export const Timer: React.FC = React.memo(() => {
                         </Button>
                     </Paper>
                 </ButtonContainer>
-                {/* <Button onClick={handleStart}>{start ? 'Пауза' : 'Старт'}</Button> */}
-                {/* <Button onClick={handleStop}>Стоп</Button> */}
             </Card>
         </Container>
     );
 });
 
-/// propTypes
-Timer.propTypes = {
-    minutes: PropTypes.number,
-    seconds: PropTypes.number,
-    millisecond: PropTypes.number,
-    start: PropTypes.bool,
-    handleStart: PropTypes.func,
-    handleStop: PropTypes.func,
-};

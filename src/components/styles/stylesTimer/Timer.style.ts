@@ -14,8 +14,8 @@ export const ButtonContainer = styled.div`
     justify-content: space-around;
     padding: 5px 10px 10px 10px;
     // padding: 20px;
-    color: red;
     margin: 5px;
+	 
 `;
 export const Timers = styled.p`
     font-size: 300%;

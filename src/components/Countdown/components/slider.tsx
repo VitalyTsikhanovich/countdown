@@ -1,6 +1,7 @@
-import React from 'react';
 import Slider from '@mui/material/Slider';
 import styled from 'styled-components';
+import { SliderContainer } from '../../styles/stylesCountdown/Slider.style';
+
 
 export type RangePropsType = {
     value: number;
@@ -21,6 +22,4 @@ export const SliderCountdown = ({ value, onChange, max, min, disabled, step }: R
     );
 };
 
-const SliderContainer = styled.div`
-    width: 200px;
-`;
+
