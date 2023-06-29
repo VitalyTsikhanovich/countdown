@@ -17,7 +17,7 @@ export const ButtonContainer = styled.div`
     margin: 5px;
 	 
 `;
-export const Timers = styled.p`
+export const Timers = styled.div`
     font-size: 300%;
 
 `;
