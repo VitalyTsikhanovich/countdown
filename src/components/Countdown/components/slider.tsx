@@ -1,6 +1,6 @@
 import Slider from '@mui/material/Slider';
-import styled from 'styled-components';
 import { SliderContainer } from '../../styles/stylesCountdown/Slider.style';
+import {memo, useCallback} from "react";
 
 
 export type RangePropsType = {
@@ -11,15 +11,15 @@ export type RangePropsType = {
     disabled: boolean;
     step: number;
 };
-export const SliderCountdown = ({ value, onChange, max, min, disabled, step }: RangePropsType) => {
-    const handleSliderChange = (event: any, newValue: any) => {
+export const SliderCountdown =memo( ({ value, onChange, max, min, disabled, step }: RangePropsType) => {
+    const handleSliderChange = useCallback((event: any, newValue: any) => {
         onChange(newValue);
-    };
+    },[])
     return (
         <SliderContainer>
             <Slider value={value} onChange={handleSliderChange} max={max} min={min} disabled={disabled} step={step} />
         </SliderContainer>
     );
-};
+})
 
 

@@ -1,5 +1,5 @@
-import { Countdown } from './components/Countdown/countdown';
-import { Timer } from './components/Timer/timer';
+import { Countdown } from "./components/Countdown/Countdown";
+import { Timer } from "./components/Timer/Timer";
 
 function App() {
     // @ts-ignore

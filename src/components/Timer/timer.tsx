@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, Card, Paper } from '@mui/material';
-import { ButtonContainer, Container, Timers, Title } from '../styles/stylesTimer/Timer.style';
+import { Box, Card, Paper } from '@mui/material';
+import {  Container, Timers } from '../styles/stylesTimer/Timer.style';
+import {ButtonGroup} from './ButtonGroup';
+import { Titles } from './Title';
 export const Timer: React.FC = React.memo(() => {
     const [start, setStart] = useState(false);
     const [minutes, setMinutes] = useState(0);
@@ -36,33 +38,26 @@ export const Timer: React.FC = React.memo(() => {
         setSeconds(0);
         setMillisecond(0);
     }, []);
-	
+
     return (
         <Container>
             <Card
                 variant='outlined'
                 style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center' }}
             >
-                <Title>Timer</Title>
+					<Titles title='Timer'/>
                 <Box style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                     <Timers>
-                        <Paper elevation={8} style={{ display: 'flex', justifyContent: 'center', width: '190px' }}>
-                            {minutes}:{seconds}:{!millisecond ? '000' : millisecond}
+                        <Paper elevation={8} style={{ display: 'flex', justifyContent: 'center', minWidth: '190px' }}>
+                            {minutes}:{seconds}:{ millisecond}
                         </Paper>
                     </Timers>
                 </Box>
-                <ButtonContainer>
-                    <Paper elevation={8} style={{ display: 'flex', justifyContent: 'space-around', width: '80%' }}>
-                        <Button variant='text' onClick={handleStart}>
-                            {start ? 'Пауза' : 'Старт'}
-                        </Button>
-                        <Button variant='text' onClick={handleStop}>
-                            Стоп
-                        </Button>
-                    </Paper>
-                </ButtonContainer>
+					 <ButtonGroup onStart={handleStart} onStop={handleStop} start={start}/>
             </Card>
         </Container>
     );
 });
+
+
 
