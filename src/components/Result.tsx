@@ -14,7 +14,7 @@ export const Result: FC<ResultType> = memo(({minutes, second, millisecond}) => {
 
         <ResultContainer>
             <Paper elevation={8} style={{display: 'flex', justifyContent: 'center', width: '190px'}}>
-                {minutes}:{second}{millisecond !== undefined && ':'}{millisecond}
+                {minutes?  minutes: 0}:{second? second: 0}{millisecond !== undefined && ':'}{millisecond}
             </Paper>
         </ResultContainer>
 
