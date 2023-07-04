@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Card, Paper } from '@mui/material';
-import {  Container, Timers } from '../styles/stylesTimer/Timer.style';
-import {ButtonGroup} from './ButtonGroup';
-import { Titles } from './Title';
-export const Timer: React.FC = React.memo(() => {
-    const [start, setStart] = useState(false);
-    const [minutes, setMinutes] = useState(0);
-    const [seconds, setSeconds] = useState(0);
-    const [millisecond, setMillisecond] = useState(0);
+import React, {useState, useEffect, FC, memo, useCallback} from 'react';
+import {Box, Card} from '@mui/material';
+import {Container} from '../styles/stylesTimer/Timer.style';
+import {ButtonGroup} from '../ButtonGroup';
+import {Titles} from '../Title';
+import {Result} from "../Result";
+
+export const Timer: FC = memo(() => {
+    const [start, setStart] = useState<boolean>(false);
+    const [minutes, setMinutes] = useState<number>(0);
+    const [seconds, setSeconds] = useState<number>(0);
+    const [millisecond, setMillisecond] = useState<number>(0);
     useEffect(() => {
         let intervalId: string | number | NodeJS.Timer | undefined;
         if (start) {
@@ -28,11 +30,11 @@ export const Timer: React.FC = React.memo(() => {
         };
     }, [start, seconds, millisecond]);
 
-    const handleStart = React.useCallback(() => {
+    const handleStart = useCallback(() => {
         setStart(e => !e);
     }, []);
 
-    const handleStop = React.useCallback(() => {
+    const handleStop = useCallback(() => {
         setStart(false);
         setMinutes(0);
         setSeconds(0);
@@ -43,17 +45,13 @@ export const Timer: React.FC = React.memo(() => {
         <Container>
             <Card
                 variant='outlined'
-                style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center' }}
+                style={{display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center'}}
             >
-					<Titles title='Timer'/>
-                <Box style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                    <Timers>
-                        <Paper elevation={8} style={{ display: 'flex', justifyContent: 'center', minWidth: '190px' }}>
-                            {minutes}:{seconds}:{ millisecond}
-                        </Paper>
-                    </Timers>
+                <Titles title='Timer'/>
+                <Box style={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+                    <Result minutes={minutes} second={seconds} millisecond={millisecond}/>
                 </Box>
-					 <ButtonGroup onStart={handleStart} onStop={handleStop} start={start}/>
+                <ButtonGroup onStart={handleStart} onStop={handleStop} start={start}/>
             </Card>
         </Container>
     );

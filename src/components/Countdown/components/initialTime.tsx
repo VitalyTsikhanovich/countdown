@@ -1,17 +1,15 @@
 import TextField from '@mui/material/TextField';
-import {ChangeEvent, memo} from "react";
+import {ChangeEvent, FC, memo} from "react";
 
 export type TimeType = {
     value: number;
-    start: boolean;
-    max: number;
     handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
-    min: number;
     disabled: boolean;
     label: string;
+
 };
 
-export const InitialTime =memo( ({ value, start, max, min, handleChange, disabled, label }: TimeType) => {
+export const InitialTime: FC<TimeType> = memo(({value, handleChange, disabled, label}) => {
     return (
         <TextField
             id='outlined-basic'

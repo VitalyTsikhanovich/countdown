@@ -2,13 +2,13 @@ import React, {useState, useEffect, ChangeEvent, FC, memo, useCallback} from 're
 
 
 import {InitialTime} from './components/InitialTime';
-import {Result} from './components/Result';
-import { Card} from '@mui/material';
-import { Container, Initial} from '../styles/stylesCountdown/Countdown.style';
+import {Result} from '../Result';
+import {Card} from '@mui/material';
+import {Container, Initial} from '../styles/stylesCountdown/Countdown.style';
 import {Progress} from './components/Progress';
 import {SliderCountdown} from './components/Slider';
-import {Titles} from "../Timer/Title";
-import {ButtonGroup} from "../Timer/ButtonGroup";
+import {Titles} from "../Title";
+import {ButtonGroup} from "../ButtonGroup";
 
 export const Countdown: FC = memo(() => {
     const [second, setSecond] = useState<number>(0);
@@ -59,7 +59,7 @@ export const Countdown: FC = memo(() => {
     }, []);
 
     const handleInputMinutesChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-        let value = +event.currentTarget.value;
+        let value = event.currentTarget.valueAsNumber
         if (value > 750) {
             value = 750;
         }
@@ -71,7 +71,8 @@ export const Countdown: FC = memo(() => {
     }, []);
 
     const handleInputSecondChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-        let value = +event.currentTarget.value;
+        let value = parseInt(event.currentTarget.value,10);
+
         if (value > 59) {
             value = 59;
         }
@@ -116,28 +117,23 @@ export const Countdown: FC = memo(() => {
             >
                 <Titles title='Countdown'/>
                 <Result
-                    minutes={!minutes ? '0' : minutes.toString()}
-                    second={!second ? '0' : second.toString()}
+                    minutes={minutes}
+                    second={second}
                 />
 
                 <Initial>
                     <InitialTime
                         label='Minutes'
                         value={inputValueMinutes}
-                        start={start}
-                        max={750}
                         handleChange={handleInputMinutesChange}
-                        min={0}
-                        disabled={start || initialTime>0}
+                        disabled={start || initialTime > 0}
+
                     />
                     <InitialTime
                         label='Seconds'
-                        max={59}
-                        min={0}
                         value={inputValueSecond}
-                        start={false}
                         handleChange={handleInputSecondChange}
-                        disabled={start || initialTime>0}
+                        disabled={start || initialTime > 0}
                     />
                 </Initial>
                 <ButtonGroup start={start} onStart={handleStart} onStop={handleStop}/>
@@ -146,7 +142,7 @@ export const Countdown: FC = memo(() => {
                     onChange={handleSliderChange}
                     max={750 * 60 + 59}
                     min={0}
-                    disabled={start || initialTime>0}
+                    disabled={start || initialTime > 0}
                     step={15}
                 />
                 <Progress value={progressPercentage}/>

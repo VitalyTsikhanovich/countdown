@@ -1,15 +1,15 @@
-import { CircularProgress } from '@mui/material';
-import { memo } from 'react';
+import {CircularProgress} from '@mui/material';
+import {FC, memo} from 'react';
 
 type ProgressPropsType = {
     value: number;
 };
 
-export const Progress = memo(({ value }: ProgressPropsType) => {
+export const Progress: FC<ProgressPropsType> = memo(({value}) => {
     return (
         <>
-            <CircularProgress variant='determinate' value={value} />
-            {/* {Math.floor(value)}% */}
+            <CircularProgress variant='determinate' value={value}/>
+            {/*{Math.floor(value)}%*/}
         </>
     );
 });
