@@ -1,7 +1,7 @@
 import {useCallback, useEffect, useState} from "react";
 
 
-export const useTimerLogic= ()=>{
+export const useTimerLogic = () => {
     const [start, setStart] = useState<boolean>(false);
     const [minutes, setMinutes] = useState<number>(0);
     const [seconds, setSeconds] = useState<number>(0);
@@ -37,7 +37,7 @@ export const useTimerLogic= ()=>{
         setMillisecond(0);
     }, []);
 
-    return{
+    return {
         start,
         minutes,
         seconds,

@@ -1,10 +1,9 @@
 import {TimerUI} from "./TimerUI";
 
 
-export const Timer=()=>{
+export const Timer = () => {
 
-
-    return(
+    return (
         <TimerUI/>
     )
 }
